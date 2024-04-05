@@ -1,1 +1,1 @@
-# sway
+swaywm setup
