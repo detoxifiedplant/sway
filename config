@@ -1,24 +1,21 @@
-# Read `man 5 sway` for a complete reference.
-
-# Logo key. Use Mod1 for Alt.
 set $mod Mod4
-# Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
-# Your preferred terminal emulator
-# set $term foot
+
 set $term alacritty
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
 font pango:Hack Neard Font 11
 include /etc/sway/config-vars.d/*
+include /etc/sway/config.d/*
 
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+default_border pixel 1
+gaps outer 2
+gaps top 0
+gaps inner 1
+
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
@@ -28,7 +25,11 @@ include /etc/sway/config-vars.d/*
 			before-sleep 'swaylock -f -c 000000'
 	# bindsym $mod+Return exec swaylock --color 444444 --no-unlock-indicator
 	bindsym $mod+Return exec swaylock --ignore-empty-password --color 444444
-	exec redshift -P -O 4320
+	exec_always redshift -P -O 4320
+	exec_always wl-paste -t text --watch clipman store --no-persist
+	exec swaymsg "workspace 1; exec thunderbird"
+	exec swaymsg "workspace 1; exec teams-for-linux"
+	exec swaymsg "workspace 2; exec $term"
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
@@ -47,12 +48,10 @@ include /etc/sway/config-vars.d/*
   }
 
 # You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
-
     floating_modifier $mod normal
 
     bindsym $mod+Shift+w reload
-    bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+q exec swaynag -t warning -m 'want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
 
     bindsym $mod+f exec $term
     bindsym $mod+d exec $menu
@@ -62,8 +61,14 @@ include /etc/sway/config-vars.d/*
 	bindsym $mod+c exec google-chrome-stable
 	bindsym $mod+x exec MOZ_ENABLE_WAYLAND=0 MOZ_DISABLE_WAYLAND_PROXY=1 firefox
 	bindsym $mod+Shift+m exec thunderbird
+	# bindsym $mod+Shift+b exec mysql-workbench
+	bindsym $mod+Shift+b exec blueman-manager
+	bindsym $mod+Shift+s exec cinnamon-settings
+	bindsym $mod+Shift+n exec cinnamon-settings network
+	bindsym $mod+Shift+v exec alacritty -e nvim
+	# bindsym $mod+Shift+n exec alacritty -e nmtui-connect
+	# bindsym $mod+slash exec wofi -show run
 
-    # Switch the current container between different layout styles
     # bindsym $mod+s layout stacking
     bindsym $mod+m layout tabbed
     bindsym $mod+s layout toggle split
@@ -71,9 +76,8 @@ include /etc/sway/config-vars.d/*
     bindsym $mod+w kill
 	bindsym $mod+z bar mode toggle
 
-    # You can "split" the current object of your focus with
-    # $mod+b or $mod+v, for horizontal and vertical splits
-    # respectively.
+	workspace 1 layout tabbed
+	workspace 2 layout fullscreen
     bindsym $mod+n split toggle
     # bindsym $mod+b splith
     # bindsym $mod+v splitv
@@ -179,38 +183,48 @@ mode "resize" {
 }
 bindsym $mod+Shift+r mode "resize"
 
-# Read `man 5 sway-bar` for more information about this section.
+# bar {
+#     position top
+#
+#     # When the status_command prints a new line to stdout, swaybar updates.
+#     # The default just shows the current date and time.
+#     status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+#
+#     colors {
+#         statusline #ffffff
+#         background #323232
+#         inactive_workspace #32323200 #32323200 #5c5c5c
+#       #                   border  backgr. text
+#       focused_workspace  #44475A #44475A #F8F8F2
+#       active_workspace   #282A36 #44475A #F8F8F2
+#       inactive_workspace #282A36 #282A36 #BFBFBF
+#       urgent_workspace   #FF5555 #FF5555 #F8F8F2
+#       binding_mode       #FF5555 #FF5555 #F8F8F2
+#     }
+# }
 bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-		#                   border  backgr. text
-		focused_workspace  #44475A #44475A #F8F8F2
-		active_workspace   #282A36 #44475A #F8F8F2
-		inactive_workspace #282A36 #282A36 #BFBFBF
-		urgent_workspace   #FF5555 #FF5555 #F8F8F2
-		binding_mode       #FF5555 #FF5555 #F8F8F2
-    }
+	swaybar_command waybar
 }
+# exec waybar
 
 # class                 border  bground text    indicator child_border
+# client.focused        #000000 #5e81ac #ffffff
 client.focused          #C2C2C2 #C2C2C2 #444444 #6272A4   #AAAAFF
 client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
 client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
 client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
 client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
-
 client.background       #F8F8F2
-default_border pixel 1
 
-include /etc/sway/config.d/*
+# gtk
+set $gnome-schema org.gnome.desktop.interface
+
+exec_always {
+  gsettings set $gnome-schema gtk-theme Nordic
+  gsettings set $gnome-schema gtk-application-prefer-dark-theme true
+  gsettings set $gnome-schema icon-theme Papirus-Dark
+  gsettings set $gnome-schema cursor-theme Adwaita
+}
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
@@ -221,16 +235,28 @@ bindsym $mod+End exec pactl set-sink-volume @DEFAULT_SINK@ +10%
 bindsym $mod+Home exec pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym $mod+BackSpace exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-bindsym $mod+Delete exec brightnessctl s +7% > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 852 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
-bindsym $mod+Insert exec brightnessctl s 7%- > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 852 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
+# bindsym $mod+Delete exec brightnessctl s +7% > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 852 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
+bindsym $mod+Delete exec brightnessctl s +7%
+bindsym $mod+Insert exec brightnessctl s 7%-
 
 for_window [window_role = "pop-up"] floating enable
 for_window [window_role = "bubble"] floating enable
 for_window [window_role = "dialog"] floating enable
 for_window [window_type = "dialog"] floating enable
 for_window [window_role = "task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
 for_window [window_type = "menu"] floating enable
+for_window [window_role="About"] floating enable
+for_window [title="File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
 for_window [app_id = "floating"] floating enable
 for_window [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
 for_window [class = "(?i)pinentry"] floating enable
+for_window [class = "Google-chrome"] floating disable
 for_window [title = "Administrator privileges required"] floating enable
+for_window [shell="xwayland"] title_format "[XWay] %title"
+# for_window [class="vlc"] floating enable, border normal
+# for_window [app_id="copyq"] floating enable, sticky enable, resize set height 600px width 550px, move position cursor, move down 330
+
+assign [app_id = "thunderbird"] 1
+# assign [app_id = "firefox"] 8
+assign [app_id = "mysql-workbench"] 4
