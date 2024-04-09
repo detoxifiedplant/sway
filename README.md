@@ -1,1 +1,1 @@
-swaywm setup
+swaywm setup with waybar

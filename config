@@ -11,14 +11,18 @@ font pango:Hack Neard Font 11
 include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
 
-default_border pixel 1
-gaps outer 2
-gaps top 0
-gaps inner 1
-
+default_border pixel 2
+# default_border none
+# border pixel 4
+smart_borders on
+# smart_gaps on
+# gaps outer 0
+# gaps top 0
+# gaps inner 4
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+# autostart
 	exec swayidle -w \
 			timeout 300 'swaylock --ignore-empty-password -f -c 000000' \
 			timeout 400 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
@@ -27,9 +31,12 @@ gaps inner 1
 	bindsym $mod+Return exec swaylock --ignore-empty-password --color 444444
 	exec_always redshift -P -O 4320
 	exec_always wl-paste -t text --watch clipman store --no-persist
-	exec swaymsg "workspace 1; exec thunderbird"
-	exec swaymsg "workspace 1; exec teams-for-linux"
-	exec swaymsg "workspace 2; exec $term"
+	# exec swaymsg "workspace 1; exec thunderbird"
+	# exec swaymsg "workspace 1; exec teams-for-linux"
+	# exec swaymsg "workspace 2; exec $term"
+	# exec swaymsg "workspace 3; exec google-chrome-stable"
+	# exec swaymsg "workspace 8; exec firefox"
+	# exec swaymsg "workspace 10; exec $term"
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
@@ -66,6 +73,8 @@ gaps inner 1
 	bindsym $mod+Shift+s exec cinnamon-settings
 	bindsym $mod+Shift+n exec cinnamon-settings network
 	bindsym $mod+Shift+v exec alacritty -e nvim
+	bindsym $mod+Shift+c exec gnome-calendar
+	bindsym $mod+Shift+t exec teams-for-linux
 	# bindsym $mod+Shift+n exec alacritty -e nmtui-connect
 	# bindsym $mod+slash exec wofi -show run
 
@@ -74,10 +83,10 @@ gaps inner 1
     bindsym $mod+s layout toggle split
     bindsym $mod+i fullscreen
     bindsym $mod+w kill
-	bindsym $mod+z bar mode toggle
+	# bindsym $mod+z bar mode toggle
 
-	workspace 1 layout tabbed
-	workspace 2 layout fullscreen
+	# workspace 1 layout tabbed
+	# workspace 2 layout fullscreen
     bindsym $mod+n split toggle
     # bindsym $mod+b splith
     # bindsym $mod+v splitv
@@ -208,8 +217,8 @@ bar {
 # exec waybar
 
 # class                 border  bground text    indicator child_border
-# client.focused        #000000 #5e81ac #ffffff
-client.focused          #C2C2C2 #C2C2C2 #444444 #6272A4   #AAAAFF
+# client.focused        #000000 #5e81ac #ffffff			  #AAAAFF
+client.focused          #C2C2C2 #C2C2C2 #444444 #ABE9B3   #89b4fa
 client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
 client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
 client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
@@ -250,6 +259,8 @@ for_window [window_role="About"] floating enable
 for_window [title="File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
 for_window [app_id = "floating"] floating enable
 for_window [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
+for_window [app_id = "gnome-calendar"] floating enable, resize set width 300 height 300, move position center
+for_window [title = "Network"] floating enable, resize set width 200 height 500, move position center
 for_window [class = "(?i)pinentry"] floating enable
 for_window [class = "Google-chrome"] floating disable
 for_window [title = "Administrator privileges required"] floating enable
@@ -258,5 +269,6 @@ for_window [shell="xwayland"] title_format "[XWay] %title"
 # for_window [app_id="copyq"] floating enable, sticky enable, resize set height 600px width 550px, move position cursor, move down 330
 
 assign [app_id = "thunderbird"] 1
-# assign [app_id = "firefox"] 8
+assign [app_id = "firefox"] 8
+assign [app_id = "google-chrome-stable"] 3
 assign [app_id = "mysql-workbench"] 4
