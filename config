@@ -33,7 +33,7 @@ smart_borders on
 	exec_always wl-paste -t text --watch clipman store --no-persist
 	# exec swaymsg "workspace 1; exec thunderbird"
 	# exec swaymsg "workspace 1; exec teams-for-linux"
-	# exec swaymsg "workspace 2; exec $term"
+	exec swaymsg "workspace 2; exec $term -e nvim"
 	# exec swaymsg "workspace 3; exec google-chrome-stable"
 	# exec swaymsg "workspace 8; exec firefox"
 	# exec swaymsg "workspace 10; exec $term"
@@ -54,6 +54,10 @@ smart_borders on
 	xkb_options caps:swapescape,ctrl:swap_lalt_lctl
   }
 
+  input "16700:8467:Dell_KB216_Wired_Keyboard" {
+	xkb_options caps:swapescape,ctrl:swap_lalt_lctl
+  }
+
 # You can get the names of your inputs by running: swaymsg -t get_inputs
     floating_modifier $mod normal
 
@@ -67,6 +71,7 @@ smart_borders on
 	bindsym $mod+a exec nemo
 	bindsym $mod+c exec google-chrome-stable
 	bindsym $mod+x exec MOZ_ENABLE_WAYLAND=0 MOZ_DISABLE_WAYLAND_PROXY=1 firefox
+	bindsym $mod+q exec dunstctl close-all
 	bindsym $mod+Shift+m exec thunderbird
 	# bindsym $mod+Shift+b exec mysql-workbench
 	bindsym $mod+Shift+b exec blueman-manager
@@ -240,13 +245,12 @@ bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-bindsym $mod+End exec pactl set-sink-volume @DEFAULT_SINK@ +10%
-bindsym $mod+Home exec pactl set-sink-volume @DEFAULT_SINK@ -10%
-bindsym $mod+BackSpace exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym $mod+End exec pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send "Volume" "$(pactl list sinks | grep 'Volume: front-left' | cut -d '/' -f 2 | tr -d '[:space:]')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
+bindsym $mod+Home exec pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send "Volume" "$(pactl list sinks | grep 'Volume: front-left' | cut -d '/' -f 2 | tr -d '[:space:]')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
+bindsym $mod+BackSpace exec pactl set-sink-mute @DEFAULT_SINK@ toggle  && notify-send "Volume" "$(pactl list sinks | grep 'Mute:' | awk '{print $2}')" -h string:x-canonical-private-synchronous:volume_status --app-name "System"
 
-# bindsym $mod+Delete exec brightnessctl s +7% > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 852 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
-bindsym $mod+Delete exec brightnessctl s +7%
-bindsym $mod+Insert exec brightnessctl s 7%-
+bindsym $mod+Delete exec brightnessctl s +10% > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 852 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
+bindsym $mod+Insert exec brightnessctl s 10%- > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 852 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
 
 for_window [window_role = "pop-up"] floating enable
 for_window [window_role = "bubble"] floating enable
