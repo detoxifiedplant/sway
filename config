@@ -12,6 +12,7 @@ include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
 
 default_border pixel 2
+hide_edge_borders --i3 none
 # default_border none
 # border pixel 4
 smart_borders on
@@ -84,8 +85,9 @@ smart_borders on
 	# bindsym $mod+slash exec wofi -show run
 
     # bindsym $mod+s layout stacking
-    bindsym $mod+m layout tabbed
-    bindsym $mod+s layout toggle split
+    # bindsym $mod+m layout tabbed
+	# bindsym $mod+s layout toggle split
+    bindsym $mod+m layout toggle tabbed split
     bindsym $mod+i fullscreen
     bindsym $mod+w kill
 	# bindsym $mod+z bar mode toggle
@@ -223,7 +225,7 @@ bar {
 
 # class                 border  bground text    indicator child_border
 # client.focused        #000000 #5e81ac #ffffff			  #AAAAFF
-client.focused          #C2C2C2 #C2C2C2 #444444 #ABE9B3   #89b4fa
+client.focused          #C2C2C2 #C2C2C2 #444444 #ABE9B3   #a6e3a1
 client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
 client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
 client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
@@ -247,7 +249,7 @@ bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 bindsym $mod+End exec pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send "Volume" "$(pactl list sinks | grep 'Volume: front-left' | cut -d '/' -f 2 | tr -d '[:space:]')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
 bindsym $mod+Home exec pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send "Volume" "$(pactl list sinks | grep 'Volume: front-left' | cut -d '/' -f 2 | tr -d '[:space:]')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
-bindsym $mod+BackSpace exec pactl set-sink-mute @DEFAULT_SINK@ toggle  && notify-send "Volume" "$(pactl list sinks | grep 'Mute:' | awk '{print $2}')" -h string:x-canonical-private-synchronous:volume_status --app-name "System"
+bindsym $mod+BackSpace exec pactl set-sink-mute @DEFAULT_SINK@ toggle  && notify-send "Volume" "$(pactl list sinks | grep 'Mute:' | awk '{if ($2 == "yes") print "no"; else print "yes"}')" -h string:x-canonical-private-synchronous:volume_status --app-name "System"
 
 bindsym $mod+Delete exec brightnessctl s +10% > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 852 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
 bindsym $mod+Insert exec brightnessctl s 10%- > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 852 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
@@ -272,7 +274,9 @@ for_window [shell="xwayland"] title_format "[XWay] %title"
 # for_window [class="vlc"] floating enable, border normal
 # for_window [app_id="copyq"] floating enable, sticky enable, resize set height 600px width 550px, move position cursor, move down 330
 
-assign [app_id = "thunderbird"] 1
-assign [app_id = "firefox"] 8
-assign [app_id = "google-chrome-stable"] 3
-assign [app_id = "mysql-workbench"] 4
+assign [workspace="2"] layout fullscreen
+for_window [app_id = "thunderbird"] move workspace 1
+for_window [class = "teams-for-linux"] move workspace 1
+# assign [app_id = "firefox"] workspace number 8
+# assign [app_id = "google-chrome-stable"] workspace number 3
+for_window [class = "Mysql-workbench-bin"] move workspace 4
