@@ -32,12 +32,12 @@ smart_borders on
 	bindsym $mod+Return exec swaylock --ignore-empty-password --color 444444
 	exec_always redshift -P -O 4320
 	exec_always wl-paste -t text --watch clipman store --no-persist
-	# exec swaymsg "workspace 1; exec thunderbird"
-	# exec swaymsg "workspace 1; exec teams-for-linux"
+	exec swaymsg "workspace 1; exec thunderbird"
+	exec swaymsg "workspace 1; exec teams-for-linux"
+	exec swaymsg "workspace 10; exec $term"
 	exec swaymsg "workspace 2; exec $term"
 	# exec swaymsg "workspace 3; exec google-chrome-stable"
 	# exec swaymsg "workspace 8; exec firefox"
-	# exec swaymsg "workspace 10; exec $term"
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
@@ -149,6 +149,8 @@ smart_borders on
     bindsym $mod+apostrophe workspace number 10
     bindsym $mod+semicolon workspace number 2
     bindsym $mod+comma workspace number 3
+    bindsym $mod+period workspace number 8
+    bindsym $mod+slash workspace number 4
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
