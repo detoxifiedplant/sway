@@ -66,8 +66,8 @@ smart_borders on
     bindsym $mod+Shift+q exec swaynag -t warning -m 'want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
 
     bindsym $mod+f exec $term
-    bindsym $mod+d exec $menu
-	bindsym $mod+r exec rofi -show combi
+    bindsym $mod+r exec $menu
+	bindsym $mod+d exec rofi -show combi
 	bindsym $mod+e exec alacritty -e ranger
 	bindsym $mod+a exec nemo
 	bindsym $mod+c exec google-chrome-stable
@@ -91,7 +91,7 @@ smart_borders on
     bindsym $mod+m layout toggle tabbed split
     bindsym $mod+i fullscreen
     bindsym $mod+w kill
-	# bindsym $mod+z bar mode toggle
+	bindsym $mod+z bar mode toggle
 
 	# workspace 1 layout tabbed
 	# workspace 2 layout fullscreen
@@ -226,6 +226,9 @@ bindsym $mod+Shift+r mode "resize"
 # }
 bar {
 	swaybar_command waybar
+	position top
+	# mode hide
+	# modifier $mod
 }
 # exec waybar
 
