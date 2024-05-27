@@ -60,6 +60,10 @@ title_align center
       pointer_accel 0.55
   }
 
+  input * {
+	tap enabled
+	}
+
   input "1:1:AT_Translated_Set_2_keyboard" {
 	xkb_options caps:swapescape,ctrl:swap_lalt_lctl
   }
