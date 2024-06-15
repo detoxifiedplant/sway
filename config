@@ -19,7 +19,7 @@ title_align center
 # smart_gaps on
 # gaps outer 0
 # gaps top 0
-# gaps inner 4
+# gaps inner 8
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 # You can get the names of your outputs by running: swaymsg -t get_outputs
@@ -35,12 +35,12 @@ title_align center
 	# bindsym $mod+Return exec swaylock --color 444444 --no-unlock-indicator
 	bindsym $mod+Return exec swaylock --ignore-empty-password --color 444444
 	exec_always gammastep -O 4320
+	exec_always swaybg -i ~/pictures/wallpapers/krishnar.png -m fill
 	exec mako
 	# exec_always wl-paste -t text --watch clipman store --no-persist
 	exec swaymsg "workspace 1; exec thunderbird"
-	exec swaymsg "workspace 1; exec teams-for-linux"
-	exec swaymsg "workspace 2; exec $term"
 	exec swaymsg "workspace 10; exec $term"
+	exec swaymsg "workspace 2; exec $term"
 
 # You can get the names of your inputs by running: swaymsg -t get_inputs
   # input type:touchpad {
@@ -60,9 +60,12 @@ title_align center
       pointer_accel 0.55
   }
 
-  input * {
-	tap enabled
-	}
+  input "type:touchpad" {
+      tap enabled
+      natural_scroll enabled
+      middle_emulation enabled
+      pointer_accel 0.55
+  }
 
   input "1:1:AT_Translated_Set_2_keyboard" {
 	xkb_options caps:swapescape,ctrl:swap_lalt_lctl
@@ -80,18 +83,19 @@ title_align center
     bindsym $mod+f exec $term
     # bindsym $mod+r exec $menu
 	bindsym $mod+d exec wofi --show=drun
-	bindsym $mod+e exec alacritty -e ranger
+	bindsym $mod+e exec $term -e yazi
 	bindsym $mod+Shift+e exec pcmanfm
 	# bindsym $mod+Shift+e exec nemo
 	# bindsym $mod+c exec google-chrome-stable
 	# bindsym $mod+x exec MOZ_ENABLE_WAYLAND=0 MOZ_DISABLE_WAYLAND_PROXY=1 firefox
 	bindsym $mod+b exec firefox
+	bindsym $mod+g exec dbgate
 	bindsym $mod+Shift+b exec blueman-manager
 	bindsym $mod+q exec mako dismiss -a
 	bindsym $mod+Shift+m exec thunderbird
-	bindsym $mod+Shift+n exec alacritty -e nmtui-connect
+	bindsym $mod+Shift+n exec $term -e nmtui-connect
 	bindsym $mod+v exec librewolf
-	bindsym $mod+Shift+v exec alacritty -e nvim
+	bindsym $mod+Shift+v exec $term -e nvim
 	# bindsym $mod+Shift+c exec gnome-calendar
 	bindsym $mod+Shift+t exec teams-for-linux
 
@@ -267,11 +271,10 @@ bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-# bindsym $mod+End exec pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send "Volume" "$(pactl list sinks | grep 'Volume: front-left: 52424' | awk 'NR>3' | cut -d '/' -f 2 | tr -d '[:space:]')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
-# bindsym $mod+Home exec pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send "Volume" "$(pactl list sinks | grep 'Volume: front-left: 52424' | awk 'NR>3' | cut -d '/' -f 2 | tr -d '[:space:]')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
-bindsym $mod+End exec pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send "Volume" "$(pactl list sinks | grep 'Volume: front-left:' | awk 'NR>3 {print $5}')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
-bindsym $mod+Home exec pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send "Volume" "$(pactl list sinks | grep 'Volume: front-left:' | awk 'NR>3 {print $5}')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
-bindsym $mod+BackSpace exec pactl set-sink-mute @DEFAULT_SINK@ toggle  && notify-send "Volume" "$(pactl list sinks | grep 'Mute:' | awk '{if ($2 == "yes") print "no"; else print "yes"}')" -h string:x-canonical-private-synchronous:volume_status --app-name "System"
+bindsym $mod+End exec pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send "Volume" "$(pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1 {print $5}')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
+bindsym $mod+Home exec pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send "Volume" "$(pactl get-sink-volume @DEFAULT_SINK@ | awk 'NR==1 {print $5}')" -h string:x-canonical-private-synchronous:volume_percentage --app-name "System"
+bindsym $mod+BackSpace exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send "Volume" "$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{if ($2 == "yes") print "no"; else print "yes"}')" -h string:x-canonical-private-synchronous:volume_status --app-name "System"
+bindsym $mod+backslash exec pactl set-source-mute @DEFAULT_SOURCE@ toggle && notify-send "Mic" "$(pactl get-source-mute @DEFAULT_SOURCE@)" -h string:x-canonical-private-synchronous:volume_status --app-name "System"
 
 bindsym $mod+Delete exec brightnessctl s +10% > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 24242 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
 bindsym $mod+Insert exec brightnessctl s 10%- > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 24242 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
@@ -299,6 +302,7 @@ for_window [title="Calculator"] floating enable, resize set width 500 height 700
 for_window [app_id = "thunderbird"] move workspace 1
 for_window [class = "teams-for-linux"] move workspace 1
 for_window [app_id = "firefox"] move workspace 3
+for_window [app_id = "librewolf"] move workspace 5
 # for_window [app_id = "google-chrome-stable"] move workspace 3
 # for_window [class = "Google-chrome"] move workspace 3
 # for_window [class = "Mysql-workbench-bin"] move workspace 4
