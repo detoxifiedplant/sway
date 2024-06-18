@@ -11,6 +11,7 @@ include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
 
 default_border pixel 2
+workspace_layout tabbed
 hide_edge_borders --i3 none
 # default_border none
 # border pixel 4
@@ -33,7 +34,7 @@ title_align center
 	# your displays after another 300 seconds, and turn your screens back on when
 	# resumed. It will also lock your screen before your computer goes to sleep.
 	# bindsym $mod+Return exec swaylock --color 444444 --no-unlock-indicator
-	bindsym $mod+Return exec swaylock --ignore-empty-password --color 444444
+	bindsym $mod+Return exec swaylock --ignore-empty-password --color 111111
 	exec_always gammastep -O 4320
 	exec_always swaybg -i ~/pictures/wallpapers/krishnar.png -m fill
 	exec mako
@@ -119,7 +120,7 @@ title_align center
 	set $ps2 Control+Shift+Print
 	set $ps3 Print
 	set $ps4 Shift+Print
-	set $psf $(xdg-user-dir PICTURES)/ps_$(date +"%Y%m%d%H%M%S").png
+	set $psf $(xdg-user-dir PICTURES)/screenshots/ps_$(date +"%Y%m%d%H%M%S").png
 	
 	bindsym $ps1 exec grim - | wl-copy
 	bindsym $ps2 exec grim -g "$(slurp)" - | wl-copy
@@ -302,8 +303,5 @@ for_window [title="Calculator"] floating enable, resize set width 500 height 700
 for_window [app_id = "thunderbird"] move workspace 1
 for_window [class = "teams-for-linux"] move workspace 1
 for_window [app_id = "firefox"] move workspace 3
-for_window [app_id = "librewolf"] move workspace 5
-# for_window [app_id = "google-chrome-stable"] move workspace 3
-# for_window [class = "Google-chrome"] move workspace 3
-# for_window [class = "Mysql-workbench-bin"] move workspace 4
+# for_window [app_id = "librewolf"] move workspace 5
 for_window [class = "FreeTube"] move workspace 1
