@@ -33,14 +33,16 @@ title_align center
 	# This will lock your screen after 300 seconds of inactivity, then turn off
 	# your displays after another 300 seconds, and turn your screens back on when
 	# resumed. It will also lock your screen before your computer goes to sleep.
-	# bindsym $mod+Return exec swaylock --color 444444 --no-unlock-indicator
-	bindsym $mod+Return exec swaylock --ignore-empty-password --color 111111
+
+	bindsym $mod+Return exec swaylock --ignore-empty-password --color 000000
+	bindsym $mod+Shift+Return exec systemctl hibernate
 	exec_always gammastep -O 4320
 	exec_always swaybg -i ~/pictures/wallpapers/krishnar.png -m fill
 	exec mako
 	# exec_always wl-paste -t text --watch clipman store --no-persist
 	exec swaymsg "workspace 1; exec thunderbird"
 	exec swaymsg "workspace 10; exec $term"
+	exec swaymsg "workspace 9; exec $term -e hackernews_tui"
 	exec swaymsg "workspace 2; exec $term"
 
 # You can get the names of your inputs by running: swaymsg -t get_inputs
@@ -82,16 +84,13 @@ title_align center
     bindsym $mod+Shift+q exec swaynag -t warning -m 'want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
 
     bindsym $mod+f exec $term
-    # bindsym $mod+r exec $menu
 	bindsym $mod+d exec wofi --show=drun
 	bindsym $mod+e exec $term -e yazi
 	bindsym $mod+Shift+e exec pcmanfm
-	# bindsym $mod+Shift+e exec nemo
-	# bindsym $mod+c exec google-chrome-stable
 	# bindsym $mod+x exec MOZ_ENABLE_WAYLAND=0 MOZ_DISABLE_WAYLAND_PROXY=1 firefox
 	bindsym $mod+b exec firefox
-	bindsym $mod+g exec dbgate
 	bindsym $mod+Shift+b exec blueman-manager
+	bindsym $mod+g exec dbgate
 	bindsym $mod+q exec mako dismiss -a
 	bindsym $mod+Shift+m exec thunderbird
 	bindsym $mod+Shift+n exec $term -e nmtui-connect
@@ -99,10 +98,8 @@ title_align center
 	bindsym $mod+Shift+v exec $term -e nvim
 	# bindsym $mod+Shift+c exec gnome-calendar
 	bindsym $mod+Shift+t exec teams-for-linux
+	bindsym $mod+t exec $term -e hackernews_tui
 
-	# bindsym $mod+s layout stacking
-	# bindsym $mod+s layout toggle split
-	# bindsym $mod+m layout tabbed
 	bindsym $mod+s exec swaymsg workspace back_and_forth
 	bindsym $mod+m layout toggle tabbed split
 	bindsym $mod+i fullscreen
@@ -168,6 +165,7 @@ title_align center
     bindsym $mod+comma workspace number 3
     bindsym $mod+period workspace number 4
     bindsym $mod+slash workspace number 5
+    bindsym $mod+bracketleft workspace number 9
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
@@ -302,6 +300,7 @@ for_window [title="Calculator"] floating enable, resize set width 500 height 700
 
 for_window [app_id = "thunderbird"] move workspace 1
 for_window [class = "teams-for-linux"] move workspace 1
-for_window [app_id = "firefox"] move workspace 3
-# for_window [app_id = "librewolf"] move workspace 5
 for_window [class = "FreeTube"] move workspace 1
+for_window [app_id = "firefox"] move workspace 3
+for_window [class = "bruno"] move workspace 4
+for_window [app_id = "librewolf"] move workspace 5
