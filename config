@@ -41,9 +41,10 @@ title_align center
 	exec mako
 	# exec_always wl-paste -t text --watch clipman store --no-persist
 	exec swaymsg "workspace 1; exec thunderbird"
-	exec swaymsg "workspace 10; exec $term"
+	exec swaymsg "workspace 1; exec teams-for-linux"
+	exec swaymsg "workspace 10; exec $term -e tmux"
 	exec swaymsg "workspace 9; exec $term -e hackernews_tui"
-	exec swaymsg "workspace 2; exec $term"
+	exec swaymsg "workspace 2; exec $term -e tmux"
 
 # You can get the names of your inputs by running: swaymsg -t get_inputs
   # input type:touchpad {
@@ -160,12 +161,13 @@ title_align center
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
-    bindsym $mod+apostrophe workspace number 10
+    bindsym $mod+quotedbl workspace number 1
     bindsym $mod+semicolon workspace number 2
     bindsym $mod+comma workspace number 3
     bindsym $mod+period workspace number 4
     bindsym $mod+slash workspace number 5
     bindsym $mod+bracketleft workspace number 9
+	bindsym $mod+apostrophe workspace number 10
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
@@ -250,7 +252,7 @@ bar {
 # client.focused        #000000 #5e81ac #ffffff			  #AAAAFF
 client.focused          #C2C2C2 #C2C2C2 #444444 #ABE9B3   #a6e3a1
 client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
-client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
+client.unfocused        #282A36 #323232 #BFBFBF #282A36   #282A36
 client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
 client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 client.background       #F8F8F2
@@ -303,4 +305,5 @@ for_window [class = "teams-for-linux"] move workspace 1
 for_window [class = "FreeTube"] move workspace 1
 for_window [app_id = "firefox"] move workspace 3
 for_window [class = "bruno"] move workspace 4
+for_window [class = "dbgate"] move workspace 4
 for_window [app_id = "librewolf"] move workspace 5
