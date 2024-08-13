@@ -40,7 +40,7 @@ title_align center
 	exec_always swaybg -i ~/pictures/wallpapers/krishnar.png -m fill
 	exec mako
 	# exec_always wl-paste -t text --watch clipman store --no-persist
-	exec swaymsg "workspace 1; exec thunderbird"
+	# exec swaymsg "workspace 1; exec thunderbird"
 	exec swaymsg "workspace 1; exec teams-for-linux"
 	exec swaymsg "workspace 10; exec $term -e tmux"
 	exec swaymsg "workspace 9; exec $term -e hackernews_tui"
@@ -93,7 +93,7 @@ title_align center
 	bindsym $mod+Shift+b exec blueman-manager
 	bindsym $mod+g exec dbgate
 	bindsym $mod+q exec mako dismiss -a
-	bindsym $mod+Shift+m exec thunderbird
+	# bindsym $mod+Shift+m exec thunderbird
 	bindsym $mod+Shift+n exec $term -e nmtui-connect
 	bindsym $mod+v exec librewolf
 	bindsym $mod+Shift+v exec $term -e nvim
@@ -161,7 +161,7 @@ title_align center
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
-    bindsym $mod+quotedbl workspace number 1
+    bindsym $mod+colon workspace number 1
     bindsym $mod+semicolon workspace number 2
     bindsym $mod+comma workspace number 3
     bindsym $mod+period workspace number 4
@@ -300,7 +300,7 @@ for_window [title = "Administrator privileges required"] floating enable
 for_window [shell="xwayland"] title_format "[XWay] %title"
 for_window [title="Calculator"] floating enable, resize set width 500 height 700, move position cursor
 
-for_window [app_id = "thunderbird"] move workspace 1
+# for_window [app_id = "thunderbird"] move workspace 1
 for_window [class = "teams-for-linux"] move workspace 1
 for_window [class = "FreeTube"] move workspace 1
 for_window [app_id = "firefox"] move workspace 3
