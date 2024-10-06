@@ -47,38 +47,38 @@ title_align center
 	exec swaymsg "workspace 9; exec $term -e hackernews_tui"
 	exec swaymsg "workspace 2; exec $term -e tmux"
 
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-  # input type:touchpad {
-  input "2:7:SynPS/2_Synaptics_TouchPad" {
-      dwt enabled
-      tap enabled
-      natural_scroll enabled
-      middle_emulation enabled
-      pointer_accel 0.45
-  }
+	# You can get the names of your inputs by running: swaymsg -t get_inputs
+	# input type:touchpad {
+	input "2:7:SynPS/2_Synaptics_TouchPad" {
+		dwt enabled
+		tap enabled
+		natural_scroll enabled
+		middle_emulation enabled
+		pointer_accel 0.45
+	}
 
-  input "1739:0:Synaptics_TM3471-020" {
-      dwt enabled
-      tap enabled
-      natural_scroll enabled
-      middle_emulation enabled
-      pointer_accel 0.55
-  }
+	input "1739:0:Synaptics_TM3471-020" {
+		dwt enabled
+		tap enabled
+		natural_scroll enabled
+		middle_emulation enabled
+		pointer_accel 0.55
+	}
 
-  input "type:touchpad" {
-      tap enabled
-      natural_scroll enabled
-      middle_emulation enabled
-      pointer_accel 0.55
-  }
+	input "type:touchpad" {
+		tap enabled
+		natural_scroll enabled
+		middle_emulation enabled
+		pointer_accel 0.55
+	}
 
-  input "1:1:AT_Translated_Set_2_keyboard" {
-	xkb_options caps:swapescape,ctrl:swap_lalt_lctl
-  }
+	input "1:1:AT_Translated_Set_2_keyboard" {
+		xkb_options caps:swapescape,ctrl:swap_lalt_lctl
+	}
 
-  input "16700:8467:Dell_KB216_Wired_Keyboard" {
-	xkb_options caps:swapescape,ctrl:swap_lalt_lctl
-  }
+	input "16700:8467:Dell_KB216_Wired_Keyboard" {
+		xkb_options caps:swapescape,ctrl:swap_lalt_lctl
+	}
 
     floating_modifier $mod normal
 
@@ -245,7 +245,7 @@ bindsym $mod+Shift+r mode "resize"
 bar {
 	swaybar_command waybar
 	position top
-	# mode hide
+	mode hide
 	# modifier $mod
 }
 
@@ -257,9 +257,6 @@ client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
 client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 client.background       #F8F8F2
 
-# gtk
-# set $gnome-schema org.gnome.desktop.interface
-
 # exec_always {
 #   gsettings set $gnome-schema gtk-theme Nordic
 #   gsettings set $gnome-schema gtk-application-prefer-dark-theme true
@@ -267,6 +264,7 @@ client.background       #F8F8F2
 #   gsettings set $gnome-schema cursor-theme Adwaita
 # }
 
+# mic and speaker controls
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +10%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -10%
 bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -277,18 +275,21 @@ bindsym $mod+Home exec pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send 
 bindsym $mod+BackSpace exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send "Volume" "$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{if ($2 == "yes") print "no"; else print "yes"}')" -h string:x-canonical-private-synchronous:volume_status --app-name "System"
 bindsym $mod+backslash exec pactl set-source-mute @DEFAULT_SOURCE@ toggle && notify-send "Mic" "$(pactl get-source-mute @DEFAULT_SOURCE@)" -h string:x-canonical-private-synchronous:volume_status --app-name "System"
 
+# brightness control
 bindsym $mod+Delete exec brightnessctl s +10% > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 24242 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
 bindsym $mod+Insert exec brightnessctl s 10%- > /dev/null && notify-send Brightness $(($(brightnessctl get) * 10 / 24242 * 10))% -h string:x-canonical-private-synchronous:brightness_percentage --app-name System
 
+# make window floating by roles
 for_window [window_role = "pop-up"] floating enable
 for_window [window_role = "bubble"] floating enable
 for_window [window_role = "dialog"] floating enable
-for_window [window_type = "dialog"] floating enable
 for_window [window_role = "task_dialog"] floating enable
-for_window [window_role="Preferences"] floating enable
+for_window [window_role = "Preferences"] floating enable
+for_window [window_role = "About"] floating enable
+for_window [window_type = "dialog"] floating enable
 for_window [window_type = "menu"] floating enable
-for_window [window_role="About"] floating enable
-for_window [title="File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
+
+# make window floating by app_id, class and title
 for_window [app_id = "floating"] floating enable
 for_window [app_id = "blueman-manager"] floating enable, resize set width 300 height 500, move position center
 for_window [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
@@ -297,10 +298,13 @@ for_window [app_id = "soffice"] floating enable, resize set width 300 height 300
 for_window [app_id = "nm-connection-editor"] floating enable, resize set width 500 height 700, move position center
 for_window [class = "(?i)pinentry"] floating enable
 for_window [title = "Administrator privileges required"] floating enable
-for_window [shell="xwayland"] title_format "[XWay] %title"
-for_window [title="Calculator"] floating enable, resize set width 500 height 700, move position cursor
+for_window [title = "File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
+for_window [title = "Calculator"] floating enable, resize set width 500 height 700, move position cursor
 
-# for_window [app_id = "thunderbird"] move workspace 1
+# format title bar to indicate app protocol
+for_window [shell = "xwayland"] title_format "[XWay] %title"
+
+# move certain apps to specified workspace
 for_window [class = "teams-for-linux"] move workspace 1
 for_window [class = "FreeTube"] move workspace 1
 for_window [app_id = "firefox"] move workspace 3
