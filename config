@@ -27,220 +27,218 @@ title_align center
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 # autostart
-	exec swayidle -w \
-			timeout 300 'swaylock --ignore-empty-password -f -c 000000' \
-			timeout 400 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-			before-sleep 'swaylock -f -c 000000'
-	# This will lock your screen after 300 seconds of inactivity, then turn off
-	# your displays after another 300 seconds, and turn your screens back on when
-	# resumed. It will also lock your screen before your computer goes to sleep.
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+exec swayidle -w \
+  timeout 300 'swaylock --ignore-empty-password -f -c 000000' \
+  timeout 400 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock -f -c 000000'
 
-	bindsym $mod+Return exec swaylock --ignore-empty-password --color 000000
-	bindsym $mod+Shift+Return exec systemctl hibernate
-	exec_always gammastep -O 4320
-	exec_always swaybg -i ~/pictures/wallpapers/krishnar.png -m fill
-	exec mako
-	# exec_always wl-paste -t text --watch clipman store --no-persist
-	# exec swaymsg "workspace 1; exec thunderbird"
-	exec swaymsg "workspace 1; exec teams-for-linux"
-	exec swaymsg "workspace 10; exec $term -e tmux"
-	exec swaymsg "workspace 9; exec $term -e hackernews_tui"
-	exec swaymsg "workspace 2; exec $term -e tmux"
+bindsym $mod+Return exec swaylock --ignore-empty-password --color 000000
+bindsym $mod+Shift+Return exec systemctl hibernate
+exec_always gammastep -O 4320
+exec_always swaybg -i ~/pictures/wallpapers/shree_krushna.jpg -m fit
 
-	# You can get the names of your inputs by running: swaymsg -t get_inputs
-	# input type:touchpad {
-	input "2:7:SynPS/2_Synaptics_TouchPad" {
-		dwt enabled
-		tap enabled
-		natural_scroll enabled
-		middle_emulation enabled
-		pointer_accel 0.45
-	}
+exec mako
+# exec_always wl-paste -t text --watch clipman store --no-persist
+# exec swaymsg "workspace 9; exec $term -e hackernews_tui"
+# exec swaymsg "workspace 10; exec $term -e tmux"
+exec swaymsg "workspace 2; exec $term -e tmux"
 
-	input "1739:0:Synaptics_TM3471-020" {
-		dwt enabled
-		tap enabled
-		natural_scroll enabled
-		middle_emulation enabled
-		pointer_accel 0.55
-	}
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# input type:touchpad {
+input "2:7:SynPS/2_Synaptics_TouchPad" {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
+  pointer_accel 0.45
+}
 
-	input "type:touchpad" {
-		tap enabled
-		natural_scroll enabled
-		middle_emulation enabled
-		pointer_accel 0.55
-	}
+input "1739:0:Synaptics_TM3471-020" {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
+  pointer_accel 0.55
+}
 
-	input "1:1:AT_Translated_Set_2_keyboard" {
-		xkb_options caps:swapescape,ctrl:swap_lalt_lctl
-	}
+input "type:touchpad" {
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
+  pointer_accel 0.55
+}
 
-	input "16700:8467:Dell_KB216_Wired_Keyboard" {
-		xkb_options caps:swapescape,ctrl:swap_lalt_lctl
-	}
+input "1:1:AT_Translated_Set_2_keyboard" {
+  xkb_options caps:swapescape,ctrl:swap_lalt_lctl
+}
 
-    floating_modifier $mod normal
+input "16700:8467:Dell_KB216_Wired_Keyboard" {
+  xkb_options caps:swapescape,ctrl:swap_lalt_lctl
+}
 
-    bindsym $mod+Shift+w reload
-    bindsym $mod+Shift+q exec swaynag -t warning -m 'want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
+floating_modifier $mod normal
 
-    bindsym $mod+f exec $term
-	bindsym $mod+d exec wofi --show=drun
-	bindsym $mod+e exec $term -e yazi
-	bindsym $mod+Shift+e exec pcmanfm
-	# bindsym $mod+x exec MOZ_ENABLE_WAYLAND=0 MOZ_DISABLE_WAYLAND_PROXY=1 firefox
-	bindsym $mod+b exec firefox
-	bindsym $mod+Shift+b exec blueman-manager
-	bindsym $mod+g exec dbgate
-	bindsym $mod+q exec mako dismiss -a
-	# bindsym $mod+Shift+m exec thunderbird
-	bindsym $mod+Shift+n exec $term -e nmtui-connect
-	bindsym $mod+v exec librewolf
-	bindsym $mod+Shift+v exec $term -e nvim
-	# bindsym $mod+Shift+c exec gnome-calendar
-	bindsym $mod+Shift+t exec teams-for-linux
-	bindsym $mod+t exec $term -e hackernews_tui
+# set the bindings
+bindsym $mod+Shift+w reload
+bindsym $mod+Shift+q exec swaynag -t warning -m 'want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
 
-	bindsym $mod+s exec swaymsg workspace back_and_forth
-	bindsym $mod+m layout toggle tabbed split
-	bindsym $mod+i fullscreen
-	bindsym $mod+w kill
-	bindsym $mod+z bar mode toggle
+bindsym $mod+f exec $term
+bindsym $mod+d exec wofi --show=drun
+bindsym $mod+e exec $term -e yazi
+bindsym $mod+Shift+e exec pcmanfm
+# for X and wayland combined
+# bindsym $mod+x exec MOZ_ENABLE_WAYLAND=0 MOZ_DISABLE_WAYLAND_PROXY=1 firefox
+bindsym $mod+b exec firefox
+bindsym $mod+Shift+b exec blueman-manager
+bindsym $mod+g exec dbgate
+bindsym $mod+q exec mako dismiss -a
+# bindsym $mod+Shift+m exec thunderbird
+bindsym $mod+Shift+n exec $term -e nmtui-connect
+bindsym $mod+v exec librewolf
+bindsym $mod+Shift+v exec $term -e nvim
+# bindsym $mod+Shift+c exec gnome-calendar
+bindsym $mod+t exec $term -e hackernews_tui
 
-	# workspace 1 layout tabbed
-	# workspace 2 layout fullscreen
-	# changes between splith splitv
-	bindsym $mod+n split toggle
-	# bindsym $mod+b splith
-	# bindsym $mod+v splitv
+bindsym $mod+s exec swaymsg workspace back_and_forth
+bindsym $mod+m layout toggle tabbed split
+bindsym $mod+i fullscreen
+bindsym $mod+w kill
+bindsym $mod+z bar mode toggle
 
-	set $ps1 Control+Print
-	set $ps2 Control+Shift+Print
-	set $ps3 Print
-	set $ps4 Shift+Print
-	set $psf $(xdg-user-dir PICTURES)/screenshots/ps_$(date +"%Y%m%d%H%M%S").png
-	
-	bindsym $ps1 exec grim - | wl-copy
-	bindsym $ps2 exec grim -g "$(slurp)" - | wl-copy
-	bindsym $ps3 exec grim $psf
-	bindsym $ps4 exec grim -g "$(slurp)" $psf
+# workspace 1 layout tabbed
+# workspace 2 layout fullscreen
+# changes between splith splitv
+bindsym $mod+n split toggle
+# bindsym $mod+b splith
+# bindsym $mod+v splitv
 
-    # Move your focus around
-    bindsym $mod+$left focus left
-    bindsym $mod+$down focus down
-    bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
-    bindsym $mod+Right focus right
+set $ps1 Control+Print
+set $ps2 Control+Shift+Print
+set $ps3 Print
+set $ps4 Shift+Print
+set $psf $(xdg-user-dir PICTURES)/screenshots/ps_$(date +"%Y%m%d%H%M%S").png
 
-    # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left move left
-    bindsym $mod+Shift+$down move down
-    bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
-    # Ditto, with arrow keys
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
-    bindsym $mod+Shift+Right move right
+bindsym $ps1 exec grim - | wl-copy
+bindsym $ps2 exec grim -g "$(slurp)" - | wl-copy
+bindsym $ps3 exec grim $psf
+bindsym $ps4 exec grim -g "$(slurp)" $psf
 
-	# bindsym $mod+space+h workspace next
-	# bindsym $mod+space+l workspace prev
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# Or use $mod+[up|down|left|right]
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
 
-    # Switch to workspace
-    bindsym $mod+1 workspace number 1
-    bindsym $mod+2 workspace number 2
-    bindsym $mod+3 workspace number 3
-    bindsym $mod+4 workspace number 4
-    bindsym $mod+5 workspace number 5
-    bindsym $mod+6 workspace number 6
-    bindsym $mod+7 workspace number 7
-    bindsym $mod+8 workspace number 8
-    bindsym $mod+9 workspace number 9
-    bindsym $mod+0 workspace number 10
-    bindsym $mod+colon workspace number 1
-    bindsym $mod+semicolon workspace number 2
-    bindsym $mod+comma workspace number 3
-    bindsym $mod+period workspace number 4
-    bindsym $mod+slash workspace number 5
-    bindsym $mod+bracketleft workspace number 9
-	bindsym $mod+apostrophe workspace number 10
-    # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace number 1
-    bindsym $mod+Shift+2 move container to workspace number 2
-    bindsym $mod+Shift+3 move container to workspace number 3
-    bindsym $mod+Shift+4 move container to workspace number 4
-    bindsym $mod+Shift+5 move container to workspace number 5
-    bindsym $mod+Shift+6 move container to workspace number 6
-    bindsym $mod+Shift+7 move container to workspace number 7
-    bindsym $mod+Shift+8 move container to workspace number 8
-    bindsym $mod+Shift+9 move container to workspace number 9
-    bindsym $mod+Shift+0 move container to workspace number 10
-    # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+# Ditto, with arrow keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
 
-    # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
-    # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+# Switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
 
-    # Move focus to the parent container
-    bindsym $mod+p focus parent
+# for easy access
+bindsym $mod+colon workspace number 1
+bindsym $mod+semicolon workspace number 2
+bindsym $mod+comma workspace number 3
+bindsym $mod+period workspace number 4
+bindsym $mod+slash workspace number 5
+bindsym $mod+bracketleft workspace number 9
+bindsym $mod+apostrophe workspace number 10
 
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
 
-    # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
 
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+# Move focus to the parent container
+bindsym $mod+p focus parent
+
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
 
 mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+  # left will shrink the containers width
+  # right will grow the containers width
+  # up will shrink the containers height
+  # down will grow the containers height
+  bindsym $left resize shrink width 10px
+  bindsym $down resize grow height 10px
+  bindsym $up resize shrink height 10px
+  bindsym $right resize grow width 10px
 
-    # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
+  # Ditto, with arrow keys
+  bindsym Left resize shrink width 10px
+  bindsym Down resize grow height 10px
+  bindsym Up resize shrink height 10px
+  bindsym Right resize grow width 10px
 
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+  # Return to default mode
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 bindsym $mod+Shift+r mode "resize"
 
 # bar {
-#     position top
-#
-#     # When the status_command prints a new line to stdout, swaybar updates.
-#     # The default just shows the current date and time.
-#     status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-#
-#     colors {
-#         statusline #ffffff
-#         background #323232
-#         inactive_workspace #32323200 #32323200 #5c5c5c
-#       #                   border  backgr. text
-#       focused_workspace  #44475A #44475A #F8F8F2
-#       active_workspace   #282A36 #44475A #F8F8F2
-#       inactive_workspace #282A36 #282A36 #BFBFBF
-#       urgent_workspace   #FF5555 #FF5555 #F8F8F2
-#       binding_mode       #FF5555 #FF5555 #F8F8F2
-#     }
+  # position top
+
+  # When the status_command prints a new line to stdout, swaybar updates.
+  # The default just shows the current date and time.
+  # status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+  #
+  # colors {
+  #   statusline #ffffff
+  #   background #323232
+  #   inactive_workspace #32323200 #32323200 #5c5c5c
+  #   #                   border  backgr. text
+  #   focused_workspace  #44475A #44475A #F8F8F2
+  #   active_workspace   #282A36 #44475A #F8F8F2
+  #   inactive_workspace #282A36 #282A36 #BFBFBF
+  #   urgent_workspace   #FF5555 #FF5555 #F8F8F2
+  #   binding_mode       #FF5555 #FF5555 #F8F8F2
+  # }
 # }
 bar {
 	swaybar_command waybar
@@ -305,7 +303,7 @@ for_window [title = "Calculator"] floating enable, resize set width 500 height 7
 for_window [shell = "xwayland"] title_format "[XWay] %title"
 
 # move certain apps to specified workspace
-for_window [class = "teams-for-linux"] move workspace 1
+# for_window [class = "teams-for-linux"] move workspace 1
 for_window [class = "FreeTube"] move workspace 1
 for_window [app_id = "firefox"] move workspace 3
 for_window [class = "bruno"] move workspace 4
