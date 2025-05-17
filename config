@@ -42,8 +42,9 @@ exec_always swaybg -i ~/pictures/wallpapers/shree_krushna.jpg -m fit
 
 exec mako
 # exec_always wl-paste -t text --watch clipman store --no-persist
-# exec swaymsg "workspace 9; exec $term -e hackernews_tui"
-# exec swaymsg "workspace 10; exec $term -e tmux"
+exec swaymsg "workspace 1; exec thunderbird"
+exec swaymsg "workspace 10; exec $term -e tmux"
+exec swaymsg "workspace 5; exec $term -e tmux"
 exec swaymsg "workspace 2; exec $term -e tmux"
 
 # You can get the names of your inputs by running: swaymsg -t get_inputs
@@ -94,8 +95,8 @@ bindsym $mod+Shift+e exec pcmanfm
 bindsym $mod+b exec firefox
 bindsym $mod+Shift+b exec blueman-manager
 bindsym $mod+g exec dbgate
-bindsym $mod+q exec mako dismiss -a
-# bindsym $mod+Shift+m exec thunderbird
+bindsym $mod+q exec makoctl dismiss -a
+bindsym $mod+Shift+m exec thunderbird
 bindsym $mod+Shift+n exec $term -e nmtui-connect
 bindsym $mod+v exec librewolf
 bindsym $mod+Shift+v exec $term -e nvim
@@ -222,23 +223,23 @@ mode "resize" {
 bindsym $mod+Shift+r mode "resize"
 
 # bar {
-  # position top
-
-  # When the status_command prints a new line to stdout, swaybar updates.
-  # The default just shows the current date and time.
-  # status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-  #
-  # colors {
-  #   statusline #ffffff
-  #   background #323232
-  #   inactive_workspace #32323200 #32323200 #5c5c5c
-  #   #                   border  backgr. text
-  #   focused_workspace  #44475A #44475A #F8F8F2
-  #   active_workspace   #282A36 #44475A #F8F8F2
-  #   inactive_workspace #282A36 #282A36 #BFBFBF
-  #   urgent_workspace   #FF5555 #FF5555 #F8F8F2
-  #   binding_mode       #FF5555 #FF5555 #F8F8F2
-  # }
+#   position top
+#
+#   # When the status_command prints a new line to stdout, swaybar updates.
+#   # The default just shows the current date and time.
+#   # status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+#
+#   colors {
+#     statusline #ffffff
+#     background #323232
+#     inactive_workspace #32323200 #32323200 #5c5c5c
+#     #                   border  backgr. text
+#     focused_workspace  #44475A #44475A #F8F8F2
+#     active_workspace   #282A36 #44475A #F8F8F2
+#     inactive_workspace #282A36 #282A36 #BFBFBF
+#     urgent_workspace   #FF5555 #FF5555 #F8F8F2
+#     binding_mode       #FF5555 #FF5555 #F8F8F2
+#   }
 # }
 bar {
 	swaybar_command waybar
@@ -289,7 +290,7 @@ for_window [window_type = "menu"] floating enable
 
 # make window floating by app_id, class and title
 for_window [app_id = "floating"] floating enable
-for_window [app_id = "blueman-manager"] floating enable, resize set width 300 height 500, move position center
+for_window [app_id = "blueman-manager"] floating enable, resize set width 300 height 500, move position cursor
 for_window [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
 for_window [app_id = "gnome-calendar"] floating enable, resize set width 300 height 300, move position center
 for_window [app_id = "soffice"] floating enable, resize set width 300 height 300, move position left
